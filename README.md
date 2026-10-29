@@ -4,24 +4,46 @@ A redesigned home page for [niatindia.com](https://www.niatindia.com/): NxtWave 
 
 Plain HTML, CSS and JavaScript. No build step and no dependencies.
 
+## Two variations
+
+| | Variation A | Variation B |
+|---|---|---|
+| URL | `/` | `/variation-b/` |
+| Look | Dark cinematic hero, Satoshi + serif accents, bento cards | Light editorial: cream paper, Newsreader serif + Inter, real event photography |
+| First audience | Students | Students **and** parents (adds "How NIAT works" and "For parents") |
+| Length (desktop) | ~15,700px | ~11,100px |
+| Weight (mobile) | ~2.6 MB | ~1.6 MB |
+
+Both use the same real content, links and images from the live site. They are built to be A/B tested against each other.
+
 ## Run locally
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then open http://localhost:8000.
+Then open http://localhost:8000 (Variation A) and http://localhost:8000/variation-b/ (Variation B).
 
 ## Structure
 
 ```
-index.html            Page markup (all sections)
-assets/css/styles.css Design tokens, layout and responsive rules
-assets/js/main.js     Header state, mobile menu, curriculum tabs, scrollers, count-up, reveal
-assets/img/           Optimised WebP images and SVG logos (taken from the current site)
+index.html                 Variation A markup
+assets/css/styles.css      Variation A styles
+assets/js/main.js          Variation A behaviour
+variation-b/               Variation B (index.html, styles.css, main.js)
+assets/img/                Shared optimised WebP images and SVG logos (from the live site)
+docs/variation-b/          How Variation B was designed:
+  01-copy-and-section-map.md    intake, journey map, refined copy, compliance changes
+  02-mobbin-reference-report.md 63 Mobbin references across 11 sections
+  03-lowfi-wireframe.html       grayscale wireframe with A/B section variations and annotations
+  04-lowfi-rationale.md         per-section rationale + all 30 Laws of UX audit
+  05-power-prompt.md            exact build spec + campus film brief
+docs/06-final-audit.md     Accessibility, compliance, performance and link audit of both pages
+reports/                   Competitor website research report (SST, NST, Polaris, Kalvium, Masai, Sunstone, Minerva, 42, Olin…)
+research_notes/            Source notes behind the report
 ```
 
-## Page sections
+## Variation A sections
 
 1. Announcement bar (NAT slots)
 2. Hero with video background, key stats and highlight cards

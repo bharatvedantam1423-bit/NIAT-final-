@@ -128,7 +128,8 @@
   /* Hero video: only autoplay when motion is OK and the connection isn't constrained */
   const video = document.querySelector('[data-hero-video]');
   const conn = navigator.connection || {};
-  if (video && !reduceMotion && !conn.saveData && !/2g/.test(conn.effectiveType || '')) {
+  const wideEnough = window.matchMedia('(min-width: 761px)').matches; // phones keep the poster: saves ~MBs on mobile data
+  if (video && wideEnough && !reduceMotion && !conn.saveData && !/2g/.test(conn.effectiveType || '')) {
     video.preload = 'auto';
     const play = () => video.play().catch(() => {});
     if (document.readyState === 'complete') play();

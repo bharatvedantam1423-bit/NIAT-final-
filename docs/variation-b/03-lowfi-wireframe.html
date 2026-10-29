@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIAT home · Variation B · Low-fi v01</title>
+<style>
+:root{
+  --bg:#ffffff; --surface:#f6f6f6; --fill:#e4e4e4; --line:#c9c9c9; --muted:#6e6e6e; --ink:#1a1a1a; --on-ink:#ffffff; --pin:#1a1a1a;
+  --r:8px; --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#141414; --surface:#1d1d1d; --fill:#2c2c2c; --line:#444; --muted:#a0a0a0; --ink:#ececec; --on-ink:#141414; --pin:#ececec; }
+}
+:root[data-theme="dark"]{ --bg:#141414; --surface:#1d1d1d; --fill:#2c2c2c; --line:#444; --muted:#a0a0a0; --ink:#ececec; --on-ink:#141414; --pin:#ececec; }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font)}
+img{max-width:100%}
+h1,h2,h3,p{margin:0}
+.display{font-size:48px;line-height:1.1;font-weight:700;letter-spacing:-.02em}
+h2{font-size:32px;line-height:1.2;font-weight:700}
+h3{font-size:20px;line-height:1.3;font-weight:600}
+.sub{color:var(--muted);font-size:18px}
+.caption{color:var(--muted);font-size:13px}
+@media (max-width:767px){ .display{font-size:34px} h2{font-size:26px} .sub{font-size:16px} }
+
+/* chrome */
+.wf-bar{position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding:10px 20px;background:var(--surface);border-bottom:1px solid var(--line);font-size:13px}
+.wf-bar strong{font-size:14px}
+.wf-bar nav{display:flex;gap:4px;overflow-x:auto;flex:1;min-width:0}
+.wf-bar nav a{color:var(--muted);text-decoration:none;padding:4px 8px;border-radius:6px;white-space:nowrap}
+.wf-bar nav a:hover{background:var(--fill);color:var(--ink)}
+.toggle{display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none}
+
+/* layout */
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.wf-section{position:relative;padding:80px 0;border-bottom:1px dashed var(--line)}
+.wf-section::before{content:attr(data-label);position:absolute;top:16px;left:24px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:2px 8px;border-radius:999px;background:var(--bg)}
+@media (max-width:767px){ .wf-section{padding:56px 0 48px} }
+.grid{display:grid;gap:24px}
+.g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:767px){ .g2,.g3,.g4{grid-template-columns:1fr} }
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.center{text-align:center;align-items:center}
+
+/* components */
+.ph{position:relative;background:var(--fill);border:1px solid var(--line);border-radius:var(--r);min-height:120px;overflow:hidden;
+  background-image:linear-gradient(to top right,transparent calc(50% - .5px),var(--line) 50%,transparent calc(50% + .5px)),linear-gradient(to bottom right,transparent calc(50% - .5px),var(--line) 50%,transparent calc(50% + .5px))}
+.ph::after{content:attr(data-ph);position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--bg);color:var(--muted);font-size:12px;padding:2px 8px;border-radius:4px;white-space:nowrap}
+.ph-video::before{content:"▶";position:absolute;left:50%;top:calc(50% - 34px);transform:translateX(-50%);font-size:22px;color:var(--muted)}
+.ph-circle{display:inline-block;width:40px;height:40px;border-radius:50%;background:var(--fill);border:1px solid var(--line);flex:none}
+.ph-icon{display:inline-block;width:40px;height:40px;border-radius:10px;background:var(--fill);border:1px solid var(--line)}
+.ph-logo{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 20px;border:1px dashed var(--line);border-radius:6px;color:var(--muted);font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:var(--r);background:var(--ink);color:var(--on-ink);font-weight:600;text-decoration:none;border:2px solid var(--ink);cursor:pointer;font:inherit;font-weight:600}
+.btn-ghost{background:transparent;color:var(--ink)}
+@media (max-width:767px){ .btn-block-m{width:100%} }
+.link{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.field{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500}
+.field input{min-height:48px;padding:0 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg);color:var(--ink);font:inherit}
+.card{border:1px solid var(--line);border-radius:12px;padding:24px;background:var(--bg);display:flex;flex-direction:column;gap:12px}
+.card-strong{border:2px solid var(--ink);transform:translateY(-8px)}
+.tag{display:inline-block;align-self:flex-start;font-size:12px;font-weight:600;border:1px solid var(--ink);border-radius:999px;padding:2px 10px}
+.skel{height:12px;border-radius:6px;background:var(--fill)}
+.acc{border-bottom:1px solid var(--line);padding:16px 0}
+.acc summary{cursor:pointer;font-weight:600;min-height:28px}
+.acc p{color:var(--muted);margin-top:8px}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{border-bottom:1px solid var(--line);padding:12px;text-align:left}
+
+/* variations */
+.var-tabs{display:flex;gap:6px;margin:0 auto 32px;max-width:1200px;padding:0 24px;flex-wrap:wrap}
+.var-tabs button{font:inherit;font-size:13px;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer}
+.var-tabs button[aria-selected="true"]{border-color:var(--ink);color:var(--ink);font-weight:600}
+
+/* annotations */
+.pin,.note{display:none}
+body.annot .pin{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 6px;border-radius:999px;background:var(--pin);color:var(--on-ink);font-size:12px;font-weight:700;position:absolute;top:-10px;right:-10px;z-index:5}
+body.annot .pin::after{content:attr(data-n)}
+body.annot .note{display:block;font-size:12px;color:var(--muted);border-left:2px solid var(--ink);padding-left:8px;margin-top:8px}
+.rel{position:relative}
+</style>
+</head>
+<body>
+
+<div class="wf-bar">
+  <strong>NIAT home · Variation B</strong><span class="caption">Low-fi v01 · grayscale · structure only</span>
+  <nav aria-label="Sections">
+    <a href="#s00">00 Header</a><a href="#s01">01 Hero</a><a href="#s02">02 Stats</a><a href="#s03">03 How it works</a><a href="#s04">04 Journey</a><a href="#s05">05 Benefits</a><a href="#s06">06 Outcomes</a><a href="#s07">07 Mentors</a><a href="#s08">08 Parents</a><a href="#s09">09 Campuses</a><a href="#s10">10 Admissions</a><a href="#s11">11 FAQ</a><a href="#s12">12 Final CTA</a><a href="#s13">13 Footer</a>
+  </nav>
+  <label class="toggle"><input type="checkbox" id="annotToggle"> Annotations</label>
+</div>
+
+<!-- 00 HEADER -->
+<section class="wf-section" id="s00" data-label="00 · Header" style="padding:56px 0 24px">
+  <div class="wrap row rel" style="justify-content:space-between">
+    <span class="pin" data-n="0"></span>
+    <span class="ph-logo">NIAT logo</span>
+    <div class="row hide-m" style="gap:20px"><a class="link">Programme</a><a class="link">Outcomes</a><a class="link">Campuses</a><a class="link">For parents</a><a class="link">Admissions</a></div>
+    <a class="btn">Apply for NAT</a>
+  </div>
+  <div class="wrap"><p class="note">Sticky. Transparent over hero, solid after scroll. Mobile: logo + menu icon + "Apply" (≥44px). Sticky bottom bar with Apply + WhatsApp appears after the hero.</p></div>
+</section>
+
+<!-- 01 HERO -->
+<section class="wf-section" id="s01" data-label="01 · Hero">
+  <div class="var-tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-var="a">A · Split + next steps</button>
+    <button role="tab" aria-selected="false" data-var="b">B · Centred + collage</button>
+  </div>
+  <div class="var" data-var="a">
+    <div class="wrap grid g2" style="align-items:center;grid-template-columns:1.4fr 1fr">
+      <div class="stack rel">
+        <span class="pin" data-n="1"></span>
+        <p class="caption">Industry-ready upskilling · 35+ UGC-recognised partner universities</p>
+        <h1 class="display">Earn your B.Tech. Build like an AI engineer from year one.</h1>
+        <p class="sub">NIAT adds hands-on AI, robotics and data science training to your UGC-recognised degree, with real projects, industry mentors and paid work along the way.</p>
+        <div class="row"><a class="btn btn-block-m">Apply for NAT</a><a class="link">Download brochure →</a></div>
+        <p class="caption">90-minute online test · No negative marking · Slots every month</p>
+      </div>
+      <div class="card rel">
+        <span class="pin" data-n="1a"></span>
+        <h3>What happens next</h3>
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="tag">1</span><div><strong>Take the NAT online</strong><p class="caption">90 minutes, from home</p></div></div>
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="tag">2</span><div><strong>One-on-one counselling</strong><p class="caption">Bring your parents along</p></div></div>
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="tag">3</span><div><strong>Choose your campus</strong><p class="caption">35+ universities, 11 states</p></div></div>
+        <div class="ph ph-video" data-ph="Campus film · 20s loop, muted" style="aspect-ratio:16/9;min-height:0"></div>
+      </div>
+    </div>
+    <div class="wrap"><p class="note">Hero media is a poster image first; the video loads only on fast connections and when reduced motion is off.</p></div>
+  </div>
+  <div class="var" data-var="b" hidden>
+    <div class="wrap stack center rel" style="max-width:760px">
+      <span class="pin" data-n="1"></span>
+      <p class="caption">Industry-ready upskilling · 35+ UGC-recognised partner universities</p>
+      <h1 class="display">Earn your B.Tech. Build like an AI engineer from year one.</h1>
+      <p class="sub">NIAT adds hands-on AI, robotics and data science training to your UGC-recognised degree.</p>
+      <a class="btn">Apply for NAT</a>
+      <p class="caption">90-minute online test · No negative marking</p>
+    </div>
+    <div class="wrap grid g4" style="margin-top:40px">
+      <div class="ph" data-ph="Student photo" style="aspect-ratio:3/4"></div><div class="ph" data-ph="Lab photo" style="aspect-ratio:3/4"></div><div class="ph" data-ph="Hackathon photo" style="aspect-ratio:3/4"></div><div class="ph" data-ph="Campus photo" style="aspect-ratio:3/4"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 STATS -->
+<section class="wf-section" id="s02" data-label="02 · Proof stats" style="padding:64px 0">
+  <div class="wrap rel">
+    <span class="pin" data-n="2"></span>
+    <div class="grid g4">
+      <div class="stack" style="gap:4px"><span class="display">1,200+*</span><span class="caption">AI projects built</span></div>
+      <div class="stack" style="gap:4px"><span class="display">100+*</span><span class="caption">Student startups</span></div>
+      <div class="stack" style="gap:4px"><span class="display">200+*</span><span class="caption">Paid internships</span></div>
+      <div class="stack" style="gap:4px"><span class="display">2,500+*</span><span class="caption">Hiring companies</span></div>
+    </div>
+    <p class="caption" style="margin-top:16px">*Outcomes are from multiple NxtWave programs, including online upskilling cohorts and placement support programs.</p>
+    <p class="note">2×2 grid on mobile. Numbers count up once on first view.</p>
+  </div>
+</section>
+
+<!-- 03 HOW IT WORKS -->
+<section class="wf-section" id="s03" data-label="03 · How NIAT works">
+  <div class="wrap stack rel" style="gap:32px">
+    <span class="pin" data-n="3"></span>
+    <div class="stack" style="max-width:640px"><h2>One degree. One edge.</h2><p class="sub">You study for your B.Tech at a partner university. NIAT trains you for industry, on the same campus, at the same time.</p></div>
+    <div class="grid" style="grid-template-columns:1fr auto 1fr auto 1fr;align-items:center" >
+      <div class="card"><span class="caption">University</span><h3>UGC-recognised B.Tech</h3></div>
+      <strong style="font-size:28px">+</strong>
+      <div class="card"><span class="caption">NIAT</span><h3>Industry Ready Certificate, projects, mentors</h3></div>
+      <strong style="font-size:28px">=</strong>
+      <div class="card card-strong"><span class="caption">You</span><h3>Graduate job-ready</h3></div>
+    </div>
+    <div class="grid g3">
+      <div class="stack"><h3>Your degree</h3><p class="caption">Awarded by the university. Valid for government jobs, private jobs and study abroad.</p></div>
+      <div class="stack"><h3>Your skills</h3><p class="caption">NIAT's curriculum runs alongside: non-credit, no effect on degree progression.</p></div>
+      <div class="stack"><h3>Your proof</h3><p class="caption">A portfolio of shipped projects by graduation.</p></div>
+    </div>
+    <p class="note">Mobile: equation stacks vertically with + and = between cards.</p>
+  </div>
+</section>
+
+<!-- 04 JOURNEY -->
+<section class="wf-section" id="s04" data-label="04 · Four-year journey">
+  <div class="var-tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-var="a">A · Vertical timeline</button>
+    <button role="tab" aria-selected="false" data-var="b">B · Year selector</button>
+  </div>
+  <div class="var" data-var="a">
+    <div class="wrap grid g2 rel" style="grid-template-columns:1fr 1.6fr;align-items:start">
+      <span class="pin" data-n="4"></span>
+      <div class="stack"><h2>Four years. Four things you'll ship.</h2><p class="sub">An industry-aligned curriculum that evolves with the field.</p><a class="btn btn-ghost">Get the full curriculum</a></div>
+      <div class="stack" style="border-left:2px solid var(--ink);padding-left:24px;gap:28px">
+        <div class="stack" style="gap:6px"><span class="tag">Year 1 · Decode</span><h3>Foundations of AI & intelligent systems</h3><p class="caption">Build: AI news summariser, prompt library, social media automation</p></div>
+        <div class="stack" style="gap:6px"><span class="tag">Year 2 · Develop</span><h3>Designing AI systems & autonomous agents</h3><p class="caption">Build: agents that use tools and work on their own</p></div>
+        <div class="stack" style="gap:6px"><span class="tag">Year 3 · Architect</span><h3>Deep learning, vision & production AI</h3><p class="caption">Build: systems that run at scale in the cloud</p></div>
+        <div class="stack" style="gap:6px"><span class="tag">Year 4 · Ship</span><h3>Physical AI, robotics & autonomy</h3><p class="caption">Build: intelligent hardware that acts in the real world</p></div>
+      </div>
+    </div>
+    <div class="wrap row" style="margin-top:32px"><span class="ph-logo">ChatGPT</span><span class="ph-logo">Claude</span><span class="ph-logo">Gemini</span><span class="ph-logo">n8n</span><span class="ph-logo">Make</span><span class="ph-logo">Runway</span></div>
+  </div>
+  <div class="var" data-var="b" hidden>
+    <div class="wrap stack rel">
+      <span class="pin" data-n="4"></span>
+      <h2>Four years. Four things you'll ship.</h2>
+      <div class="row" style="gap:24px"><span class="display">Y1</span><span class="display" style="opacity:.3">Y2</span><span class="display" style="opacity:.3">Y3</span><span class="display" style="opacity:.3">Y4</span></div>
+      <div class="card"><span class="tag">Year 1 · Decode</span><h3>Foundations of AI & intelligent systems</h3><p class="caption">Modules · skills · tools · projects (detail panel)</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 BENEFITS -->
+<section class="wf-section" id="s05" data-label="05 · NIATian benefits">
+  <div class="wrap stack rel" style="gap:32px">
+    <span class="pin" data-n="5"></span>
+    <h2>Extras that only NIATians get.</h2>
+    <div class="grid" style="grid-template-columns:1.5fr 1fr 1fr">
+      <div class="card card-strong" style="transform:none"><span class="ph-icon"></span><h3>IIT Kharagpur OCN micro-specialisations</h3><p class="caption">Foundations of Generative AI · Generative & Agentic AI. Certificate, student ID, alumni status for qualifying learners.</p><p class="caption">[Full IIT KGP disclaimer, small]</p></div>
+      <div class="card"><span class="display" style="font-size:36px">₹30,000+</span><h3>per project</h3><p class="caption">At least one paid real-world project with startups & MNCs. *Subject to eligibility</p></div>
+      <div class="card"><span class="display" style="font-size:36px">₹100 Cr</span><h3>in AI tokens</h3><p class="caption">Build with frontier models. *T&C apply</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 OUTCOMES -->
+<section class="wf-section" id="s06" data-label="06 · Student outcomes">
+  <div class="var-tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-var="a">A · Filterable rail</button>
+    <button role="tab" aria-selected="false" data-var="b">B · Separate blocks</button>
+  </div>
+  <div class="var" data-var="a">
+    <div class="wrap stack rel" style="gap:24px">
+      <span class="pin" data-n="6"></span>
+      <div class="row" style="justify-content:space-between"><h2>Real students. Real results.</h2><div class="row"><a class="btn btn-ghost" style="min-height:40px">←</a><a class="btn btn-ghost" style="min-height:40px">→</a></div></div>
+      <div class="row" role="tablist"><span class="tag">All</span><span class="tag" style="opacity:.6">Placements</span><span class="tag" style="opacity:.6">Wins</span><span class="tag" style="opacity:.6">Startups</span></div>
+      <div class="grid g4">
+        <div class="card"><div class="ph" data-ph="Photo" style="aspect-ratio:1"></div><span class="tag">Placement</span><h3>Subhash · 80 LPA</h3><p class="caption">SDE · Apple · NxtWave program, year &amp; batch size shown</p></div>
+        <div class="card"><div class="ph" data-ph="Photo" style="aspect-ratio:1"></div><span class="tag">Win</span><h3>₹3,50,000</h3><p class="caption">OpenAI Academy × NxtWave Buildathon 2026</p></div>
+        <div class="card"><div class="ph" data-ph="Photo" style="aspect-ratio:1"></div><span class="tag">Startup</span><h3>Webaura · ₹5.23 L revenue</h3><p class="caption">Sai Santosh, Rohith</p></div>
+        <div class="card"><div class="ph" data-ph="Photo" style="aspect-ratio:1"></div><span class="tag">Win</span><h3>₹2.92 Cr stipends</h3><p class="caption">Secured by NIATians</p></div>
+      </div>
+      <div class="row"><span class="ph-logo">Recruiter</span><span class="ph-logo">Recruiter</span><span class="ph-logo">Recruiter</span><span class="ph-logo">Recruiter</span><span class="ph-logo">Recruiter</span><span class="caption">2,500+ companies have hired NxtWave learners</span></div>
+      <p>Past record is no guarantee of future prospects. Outcomes are from multiple NxtWave programs… Enrolment does not assure a job or internship.</p><p class="note">Compliance: disclaimer set at the same size as the claims (ASCI 2023 / CCPA 2024), not as fine print.</p>
+      <p class="note">Rail scrolls horizontally (snap). Filter changes the set without reloading. Each card has one type tag.</p>
+    </div>
+  </div>
+  <div class="var" data-var="b" hidden>
+    <div class="wrap stack rel" style="gap:24px">
+      <span class="pin" data-n="6"></span>
+      <h2>Real students. Real results.</h2>
+      <div class="grid g3"><div class="ph" data-ph="Achievement" style="aspect-ratio:4/3"></div><div class="ph" data-ph="Achievement" style="aspect-ratio:4/3"></div><div class="ph" data-ph="Achievement" style="aspect-ratio:4/3"></div></div>
+      <h3>Top placements</h3><div class="grid g4"><div class="ph" data-ph="Offer" style="aspect-ratio:3/4"></div><div class="ph" data-ph="Offer" style="aspect-ratio:3/4"></div><div class="ph" data-ph="Offer" style="aspect-ratio:3/4"></div><div class="ph" data-ph="Offer" style="aspect-ratio:3/4"></div></div>
+      <h3>Startups</h3><div class="grid g3"><div class="ph" data-ph="Startup" style="aspect-ratio:4/3"></div><div class="ph" data-ph="Startup" style="aspect-ratio:4/3"></div><div class="ph" data-ph="Startup" style="aspect-ratio:4/3"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 MENTORS -->
+<section class="wf-section" id="s07" data-label="07 · Mentors">
+  <div class="wrap stack rel" style="gap:28px">
+    <span class="pin" data-n="7"></span>
+    <h2>Taught by people who ship for a living.</h2>
+    <div class="grid g2">
+      <div class="card"><div class="row"><span class="ph-circle" style="width:64px;height:64px"></span><div><h3>Dr. SS Mantha</h3><p class="caption">Former Chairman, AICTE</p></div></div></div>
+      <div class="card"><div class="row"><span class="ph-circle" style="width:64px;height:64px"></span><div><h3>Dr. Sandeep Sancheti</h3><p class="caption">Former Director, NITK Surathkal, NIT Delhi & NIT Goa</p></div></div></div>
+    </div>
+    <div class="grid g3">
+      <div class="row"><span class="ph-circle"></span><div><strong>Rahul Attuluri</strong><p class="caption">CEO · NxtWave</p></div></div>
+      <div class="row"><span class="ph-circle"></span><div><strong>Sravya Nimmagadda</strong><p class="caption">Sr Deep Learning Scientist · NVIDIA</p></div></div>
+      <div class="row"><span class="ph-circle"></span><div><strong>Giridhar Ganapavarapu</strong><p class="caption">Advisory Research SWE · IBM</p></div></div>
+      <div class="row"><span class="ph-circle"></span><div><strong>Tushar Tayal</strong><p class="caption">Director of Engineering · Swiggy</p></div></div>
+      <div class="row"><span class="ph-circle"></span><div><strong>Siva Ghani Reddy</strong><p class="caption">Principal PM · Microsoft</p></div></div>
+      <div class="row"><span class="ph-circle"></span><div><strong>+ 7 more mentors</strong><p class="caption">Kotak, X, Fincent, Liftoff…</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 PARENTS -->
+<section class="wf-section" id="s08" data-label="08 · For parents">
+  <div class="wrap grid g2 rel" style="align-items:start">
+    <span class="pin" data-n="8"></span>
+    <div class="stack"><h2>Questions parents ask us first.</h2><p class="sub">Straight answers, before you spend a rupee.</p><a class="btn">Talk to a counsellor</a>
+      <div class="card"><p>"No one has ever created a teaching methodology like NxtWave."</p><p class="caption">Anupam Mittal · Shark Tank India</p></div></div>
+    <div class="stack">
+      <div class="card"><h3>Is the degree valid?</h3><p class="caption">Yes. UGC-recognised / AICTE-approved B.Tech, awarded by the university.</p></div>
+      <div class="card"><h3>Is NIAT a university?</h3><p class="caption">No. NIAT is an upskilling initiative by NxtWave. Admission is at the university's discretion.</p></div>
+      <div class="card"><h3>Are jobs guaranteed?</h3><p class="caption">No. 100+ companies reach out to NxtWave each month, but outcomes depend on effort and skill.</p></div>
+      <div class="card"><h3>Can we talk to someone?</h3><p class="caption">Yes. Counsellors meet students and parents together.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 CAMPUSES -->
+<section class="wf-section" id="s09" data-label="09 · Campuses">
+  <div class="wrap stack rel" style="gap:24px">
+    <span class="pin" data-n="9"></span>
+    <div class="row" style="justify-content:space-between"><h2>Find a campus near you.</h2><a class="link">View all 35+ campuses →</a></div>
+    <div class="row"><span class="tag">All</span><span class="tag" style="opacity:.6">Andhra Pradesh</span><span class="tag" style="opacity:.6">Maharashtra</span><span class="tag" style="opacity:.6">Telangana</span><span class="tag" style="opacity:.6">+8 states</span></div>
+    <div class="grid g3">
+      <div class="card"><div class="ph" data-ph="Campus photo" style="aspect-ratio:4/3"></div><h3>Chalapathi University</h3><p class="caption">Guntur, Andhra Pradesh</p></div>
+      <div class="card"><div class="ph" data-ph="Campus photo" style="aspect-ratio:4/3"></div><h3>GMR Institute of Technology</h3><p class="caption">Vizianagaram, Andhra Pradesh</p></div>
+      <div class="card"><div class="ph" data-ph="Campus photo" style="aspect-ratio:4/3"></div><h3>Ajeenkya DY Patil University</h3><p class="caption">Pune, Maharashtra</p></div>
+    </div>
+    <p class="note">States with no featured card show an empty state: "Campuses in this state are listed on the campus page →".</p>
+  </div>
+</section>
+
+<!-- 10 ADMISSIONS -->
+<section class="wf-section" id="s10" data-label="10 · Admissions">
+  <div class="wrap grid g2 rel" style="align-items:start">
+    <span class="pin" data-n="10"></span>
+    <div class="stack"><h2>Start with the NAT.</h2><p class="sub">Online, 90 minutes, no negative marking. Slots run multiple times a month.</p><div class="row"><a class="btn btn-block-m">Apply for NAT</a><a class="link">NAT syllabus & pattern →</a></div></div>
+    <div class="stack" style="border-left:2px solid var(--ink);padding-left:24px;gap:24px">
+      <div><span class="tag">1</span><h3>Apply for NAT</h3><p class="caption">₹1,200 registration fee (non-refundable)</p></div>
+      <div><span class="tag">2</span><h3>Take the test</h3><p class="caption">Psychometric · Critical thinking · Maths</p></div>
+      <div><span class="tag">3</span><h3>Counselling session</h3><p class="caption">One-on-one, parents welcome</p></div>
+      <div><span class="tag">4</span><h3>Confirm admission</h3><p class="caption">At the university's discretion</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 FAQ -->
+<section class="wf-section" id="s11" data-label="11 · FAQ">
+  <div class="wrap grid g2 rel" style="grid-template-columns:1fr 2fr;align-items:start">
+    <span class="pin" data-n="11"></span>
+    <div class="stack"><h2>Questions, answered.</h2><a class="btn btn-ghost">WhatsApp a counsellor</a></div>
+    <div class="stack">
+      <div class="row"><span class="tag">About NIAT</span><span class="tag" style="opacity:.6">Degree</span><span class="tag" style="opacity:.6">NAT</span></div>
+      <details class="acc" open><summary>What is NIAT?</summary><p>An upskilling initiative by NxtWave, offered at 35+ universities.</p></details>
+      <details class="acc"><summary>What makes the programme different?</summary><p>…</p></details>
+      <details class="acc"><summary>Where is it offered?</summary><p>…</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 12 FINAL CTA -->
+<section class="wf-section" id="s12" data-label="12 · Final CTA">
+  <div class="wrap stack center rel" style="max-width:720px">
+    <span class="pin" data-n="12"></span>
+    <h2>Your first AI project starts this year.</h2>
+    <p class="sub">Apply for the NAT, then meet a counsellor with your parents.</p>
+    <div class="row" style="justify-content:center"><a class="btn">Apply for NAT</a><a class="btn btn-ghost">Talk to a counsellor</a></div>
+  </div>
+</section>
+
+<!-- 13 FOOTER -->
+<section class="wf-section" id="s13" data-label="13 · Footer">
+  <div class="wrap stack rel">
+    <span class="pin" data-n="13"></span>
+    <div class="grid g4"><div class="stack"><span class="ph-logo">NIAT logo</span><div class="row"><span class="ph-circle"></span><span class="ph-circle"></span><span class="ph-circle"></span></div></div><div class="stack"><strong>Explore</strong><span class="skel" style="width:70%"></span><span class="skel" style="width:60%"></span><span class="skel" style="width:65%"></span></div><div class="stack"><strong>Programmes</strong><span class="skel" style="width:50%"></span><span class="skel" style="width:60%"></span></div><div class="stack"><strong>Reach us</strong><p class="caption">+91 8008 9009 08 (WhatsApp) · support@niatindia.com</p></div></div>
+    <p class="caption">Disclaimer: NIAT is not a university or a degree-awarding body…</p>
+  </div>
+</section>
+
+<style>@media (max-width:767px){.hide-m{display:none!important}.grid[style*="grid-template-columns"]{grid-template-columns:1fr!important}#s03 .grid[style*="auto"]{text-align:center}.display{overflow-wrap:anywhere}.row>*{min-width:0}body.annot .pin{right:0}}</style>
+<script>
+(function(){
+  var t=document.getElementById('annotToggle');
+  if(t){t.addEventListener('change',function(){document.body.classList.toggle('annot',t.checked)});}
+  document.querySelectorAll('.wf-section').forEach(function(sec){
+    var tabs=sec.querySelectorAll('.var-tabs [data-var]');
+    tabs.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        tabs.forEach(function(b){b.setAttribute('aria-selected', b===btn?'true':'false')});
+        sec.querySelectorAll('.var').forEach(function(v){v.hidden = v.getAttribute('data-var')!==btn.getAttribute('data-var')});
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
