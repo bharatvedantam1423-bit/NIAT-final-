@@ -22,7 +22,7 @@ Both use the same real content, links and images from the live site. They are bu
 python3 -m http.server 8000
 ```
 
-Then open http://localhost:8000 (Variation A) and http://localhost:8000/variation-b/ (Variation B).
+Then open http://localhost:8000 (Variation A) and http://localhost:8000/variation-b/ (Variation B). Both pages have an "A | B" switcher in the bottom-left corner. On Vercel, `/a` and `/b` are short links to each.
 
 ## Structure
 

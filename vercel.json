@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/a", "destination": "/", "permanent": false },
+    { "source": "/b", "destination": "/variation-b/", "permanent": false }
+  ]
+}
